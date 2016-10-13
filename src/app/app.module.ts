@@ -1,9 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { BrowserModule }        from '@angular/platform-browser';
+import { HttpModule }           from '@angular/http';
+import { MaterialModule }       from '@angular/material';
+import { NgModule }             from '@angular/core';
 
-import { AppComponent } from './app.component';
+//Faking web service
+import { InMemoryWebApiModule } from 'angular2-in-memory-web-api';
+import { InMemoryDataService }  from './shared';
+
+import { AppComponent }         from './app.component';
+import { HeroesModule, HeroService }           from './heroes';
+
+import { routing }              from './app.router';
 
 @NgModule({
   declarations: [
@@ -11,10 +18,17 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule
+    HttpModule,
+    HeroesModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    routing,
+    MaterialModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    HeroService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
